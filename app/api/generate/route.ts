@@ -1,6 +1,6 @@
 import { auth } from '@clerk/nextjs/server';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
-import { openai, buildSystemPrompt, buildUserPrompt } from '@/lib/openai';
+import { getOpenAI, buildSystemPrompt, buildUserPrompt } from '@/lib/openai';
 import { PLAN_LIMITS } from '@/lib/revenuecat';
 import { NextRequest, NextResponse } from 'next/server';
 import type { PostFormat, PostTone, PostLength, PostHookStyle, SubscriptionTier } from '@/types/database';
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
     hook_style as PostHookStyle | undefined
   );
 
-  const completion = await openai.chat.completions.create({
+  const completion = await getOpenAI().chat.completions.create({
     model: 'gpt-4o',
     response_format: { type: 'json_object' },
     messages: [

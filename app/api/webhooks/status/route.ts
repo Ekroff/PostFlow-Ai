@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { sendEmail, buildApprovalEmailHtml } from '@/lib/sendgrid';
-import { generateApprovalToken } from '@/app/api/approve/route';
+import { generateApprovalToken } from '@/lib/jwt';
 
 export async function POST(req: NextRequest) {
   const body = await req.json();

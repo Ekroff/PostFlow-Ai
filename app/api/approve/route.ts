@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { jwtVerify, SignJWT } from 'jose';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
-
-const jwtSecret = process.env.JWT_SIGNING_SECRET;
-if (!jwtSecret && process.env.NODE_ENV === 'production') {
-  throw new Error('JWT_SIGNING_SECRET environment variable is required in production');
-}
-const secret = new TextEncoder().encode(jwtSecret ?? 'dev-secret');
+import { verifyApprovalToken } from '@/lib/jwt';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -20,10 +14,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const { payload } = await jwtVerify(token, secret);
-    const postId = payload.post_id as string;
-
-    if (!postId) throw new Error('No post_id in token');
+    const postId = await verifyApprovalToken(token);
 
     if (action === 'reject') {
       // Redirect to a reject page with a comment form
@@ -46,12 +37,4 @@ export async function GET(req: NextRequest) {
       `${process.env.NEXT_PUBLIC_APP_URL}/app/queue?error=expired_link`
     );
   }
-}
-
-/** Helper: generate a signed approval URL token */
-export async function generateApprovalToken(postId: string): Promise<string> {
-  return new SignJWT({ post_id: postId })
-    .setProtectedHeader({ alg: 'HS256' })
-    .setExpirationTime('1h')
-    .sign(secret);
 }

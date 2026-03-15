@@ -1,9 +1,21 @@
 import OpenAI from 'openai';
 import type { BrandProfile, PostFormat, PostTone, PostLength, PostHookStyle } from '@/types/database';
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+// Lazy singleton — avoids initialization errors at build time when env vars are absent
+let _openai: OpenAI | null = null;
+export function getOpenAI(): OpenAI {
+  if (!_openai) {
+    _openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  }
+  return _openai;
+}
 
-export { openai };
+/** @deprecated use getOpenAI() instead */
+export const openai = {
+  get chat() {
+    return getOpenAI().chat;
+  },
+};
 
 export function buildSystemPrompt(profile: BrandProfile | null): string {
   if (!profile) {
@@ -70,7 +82,7 @@ Make them feel authentic, not generic AI content. Avoid filler phrases.`;
 }
 
 export async function analyseVoiceProfile(samplePosts: string): Promise<Partial<BrandProfile>> {
-  const completion = await openai.chat.completions.create({
+  const completion = await getOpenAI().chat.completions.create({
     model: 'gpt-4o',
     response_format: { type: 'json_object' },
     messages: [

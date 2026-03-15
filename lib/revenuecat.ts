@@ -68,8 +68,10 @@ export const PLAN_PRICES: Record<SubscriptionTier, number> = {
  * and updated via RevenueCat webhooks once integrated.
  */
 export async function checkEntitlement(
-  _userId: string,
-  _tier: SubscriptionTier
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  userId: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  tier: SubscriptionTier
 ): Promise<boolean> {
   // RevenueCat integration pending — always returns true in dev
   return true;
