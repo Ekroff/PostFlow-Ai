@@ -2,7 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { jwtVerify, SignJWT } from 'jose';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 
-const secret = new TextEncoder().encode(process.env.JWT_SIGNING_SECRET ?? 'dev-secret');
+const jwtSecret = process.env.JWT_SIGNING_SECRET;
+if (!jwtSecret && process.env.NODE_ENV === 'production') {
+  throw new Error('JWT_SIGNING_SECRET environment variable is required in production');
+}
+const secret = new TextEncoder().encode(jwtSecret ?? 'dev-secret');
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);

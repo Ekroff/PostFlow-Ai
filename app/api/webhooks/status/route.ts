@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
 
   // Only process INSERT/UPDATE events where status became 'in_review'
   if (
-    type !== 'UPDATE' && type !== 'INSERT' ||
+    !(type === 'UPDATE' || type === 'INSERT') ||
     record?.status !== 'in_review' ||
     old_record?.status === 'in_review'
   ) {

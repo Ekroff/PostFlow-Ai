@@ -75,7 +75,12 @@ export async function POST(req: NextRequest) {
     max_tokens: 2000,
   });
 
-  const result = JSON.parse(completion.choices[0].message.content!);
+  let result: Record<string, unknown>;
+  try {
+    result = JSON.parse(completion.choices[0].message.content!);
+  } catch {
+    return NextResponse.json({ error: 'AI returned malformed JSON. Please try again.' }, { status: 502 });
+  }
 
   // Update usage tracking (upsert)
   await supabase.from('usage_tracking').upsert(
