@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
   // Get post author and workspace admins/editors who should review
   const { data: post } = await supabase

@@ -4,7 +4,7 @@ import { KanbanBoard } from '@/components/KanbanBoard';
 
 export default async function QueuePage() {
   const { userId } = await auth();
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
   const { data: user } = await supabase
     .from('users')

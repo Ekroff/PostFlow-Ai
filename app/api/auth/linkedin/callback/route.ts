@@ -38,7 +38,7 @@ export async function GET(req: NextRequest) {
   const tokens = await tokenRes.json();
   const profile = await getLinkedInProfile(tokens.access_token);
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   await supabase
     .from('users')
     .update({

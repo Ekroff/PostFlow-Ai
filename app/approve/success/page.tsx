@@ -1,9 +1,9 @@
-export default function ApproveSuccessPage({
+export default async function ApproveSuccessPage({
   searchParams,
 }: {
-  searchParams: { action?: string };
+  searchParams: Promise<{ action?: string }>;
 }) {
-  const { action } = searchParams;
+  const { action } = await searchParams;
   const approved = action === 'approved';
   const rejected = action === 'rejected';
 

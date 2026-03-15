@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
     return new NextResponse('Unauthorized', { status: 401 });
   }
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const now = new Date().toISOString();
 
   const { data: posts } = await supabase

@@ -3,11 +3,12 @@ import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { sendEmail } from '@/lib/sendgrid';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { userId } = await auth();
   if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
+  const { id } = await params;
 
   const { data: user } = await supabase
     .from('users')
@@ -27,7 +28,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
   const { data: post, error } = await supabase
     .from('posts')
     .update({ status: newStatus })
-    .eq('id', params.id)
+    .eq('id', id)
     .select('*, author:users(email)')
     .single();
 
@@ -36,7 +37,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
   // Add comment if provided
   if (comment) {
     await supabase.from('post_comments').insert({
-      post_id: params.id,
+      post_id: id,
       user_id: user.id,
       content: comment,
     });

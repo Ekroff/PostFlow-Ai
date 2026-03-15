@@ -22,7 +22,7 @@ function makeNoopBuilder(): Record<string, unknown> {
   return noop;
 }
 
-export function createSupabaseServerClient() {
+export async function createSupabaseServerClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
@@ -36,7 +36,7 @@ export function createSupabaseServerClient() {
     >;
   }
 
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   return createServerClient<Database>(url, key, {
     cookies: {
       get(name: string) {

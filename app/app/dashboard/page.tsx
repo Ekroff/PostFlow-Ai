@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default async function DashboardPage() {
   const { userId } = await auth();
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
   const { data: user } = await supabase
     .from('users')

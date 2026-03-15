@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
     await supabase.from('posts').update({ status: 'approved' }).eq('id', postId);
 
     return NextResponse.redirect(`${appUrl()}/approve/success?action=approved`);
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     const postId = await verifyApprovalToken(token);
     const { comment } = await req.json();
 
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
     await supabase.from('posts').update({ status: 'changes_requested' }).eq('id', postId);
 
     if (comment) {

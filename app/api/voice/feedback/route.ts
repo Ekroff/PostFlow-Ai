@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   const { post_id, feedback } = await req.json();
   // feedback: 'approved' | 'rejected'
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { data: post } = await supabase
     .from('posts')
     .select('performance_data')

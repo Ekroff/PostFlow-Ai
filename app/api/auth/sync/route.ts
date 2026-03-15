@@ -9,7 +9,7 @@ export async function POST() {
   const clerkUser = await currentUser();
   if (!clerkUser) return NextResponse.json({ error: 'User not found' }, { status: 404 });
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const email = clerkUser.emailAddresses[0]?.emailAddress ?? '';
 
   // Check if user already exists
