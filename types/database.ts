@@ -31,7 +31,7 @@ export type PostHookStyle =
   | 'personal_story'
   | 'contrarian';
 
-export interface User {
+export type User = {
   id: string;
   clerk_user_id: string;
   email: string;
@@ -43,9 +43,9 @@ export interface User {
   linkedin_urn: string | null;
   created_at: string;
   updated_at: string;
-}
+};
 
-export interface Workspace {
+export type Workspace = {
   id: string;
   name: string;
   owner_id: string;
@@ -53,9 +53,9 @@ export interface Workspace {
   settings: Record<string, unknown>;
   created_at: string;
   updated_at: string;
-}
+};
 
-export interface BrandProfile {
+export type BrandProfile = {
   id: string;
   user_id: string;
   product_name: string;
@@ -74,9 +74,9 @@ export interface BrandProfile {
   website_url: string | null;
   created_at: string;
   updated_at: string;
-}
+};
 
-export interface Post {
+export type Post = {
   id: string;
   workspace_id: string;
   author_id: string;
@@ -94,18 +94,18 @@ export interface Post {
   updated_at: string;
   // Joined fields
   author?: User;
-}
+};
 
-export interface PostVersion {
+export type PostVersion = {
   id: string;
   post_id: string;
   content: string;
   edited_by: string | null;
   version_num: number;
   created_at: string;
-}
+};
 
-export interface PostComment {
+export type PostComment = {
   id: string;
   post_id: string;
   user_id: string;
@@ -113,9 +113,9 @@ export interface PostComment {
   resolved: boolean;
   created_at: string;
   user?: User;
-}
+};
 
-export interface UsageTracking {
+export type UsageTracking = {
   id: string;
   user_id: string;
   action_type: string;
@@ -123,7 +123,7 @@ export interface UsageTracking {
   count: number;
   created_at: string;
   updated_at: string;
-}
+};
 
 export interface Database {
   public: {
@@ -132,11 +132,13 @@ export interface Database {
         Row: User;
         Insert: Partial<User> & { clerk_user_id: string; email: string };
         Update: Partial<User>;
+        Relationships: [];
       };
       workspaces: {
         Row: Workspace;
-        Insert: Partial<Workspace> & { name: string; owner_id: string };
+        Insert: Partial<Workspace> & { name: string };
         Update: Partial<Workspace>;
+        Relationships: [];
       };
       brand_profiles: {
         Row: BrandProfile;
@@ -147,6 +149,7 @@ export interface Database {
           primary_audience: string;
         };
         Update: Partial<BrandProfile>;
+        Relationships: [];
       };
       posts: {
         Row: Post;
@@ -157,16 +160,19 @@ export interface Database {
           format_type: PostFormat;
         };
         Update: Partial<Post>;
+        Relationships: [];
       };
       post_versions: {
         Row: PostVersion;
         Insert: Partial<PostVersion> & { post_id: string; content: string; version_num: number };
         Update: Partial<PostVersion>;
+        Relationships: [];
       };
       post_comments: {
         Row: PostComment;
         Insert: Partial<PostComment> & { post_id: string; user_id: string; content: string };
         Update: Partial<PostComment>;
+        Relationships: [];
       };
       usage_tracking: {
         Row: UsageTracking;
@@ -176,7 +182,10 @@ export interface Database {
           month_year: string;
         };
         Update: Partial<UsageTracking>;
+        Relationships: [];
       };
     };
+    Views: {};
+    Functions: {};
   };
 }
