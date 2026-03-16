@@ -114,6 +114,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       posts: savedPosts,
+      variations: result.variations,
       voice_match_score: result.voice_match_score,
       meta: result.meta,
     });

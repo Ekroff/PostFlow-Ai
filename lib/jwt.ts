@@ -11,7 +11,7 @@ export async function signApprovalToken(postId: string): Promise<string> {
     .setProtectedHeader({ alg: 'HS256' })
     .setExpirationTime('1h')
     .setIssuedAt()
-    .sign(await Promise.resolve(getSecret()));
+    .sign(getSecret());
 }
 
 export async function verifyApprovalToken(token: string): Promise<{ postId: string }> {

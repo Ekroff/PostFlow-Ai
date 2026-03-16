@@ -36,8 +36,10 @@ export async function GET(request: NextRequest) {
     }
 
     if (month) {
+      const [year, monthIndex] = month.split('-').map(Number);
       const startDate = `${month}-01`;
-      const endDate = `${month}-31`;
+      const lastDay = new Date(year, monthIndex, 0).getDate();
+      const endDate = `${month}-${String(lastDay).padStart(2, '0')}`;
       query = query.gte('scheduled_at', startDate).lte('scheduled_at', endDate);
     }
 
