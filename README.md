@@ -2,7 +2,7 @@
 
 **LinkedIn AI Post Generation & Team Publishing Platform**
 
-PostFlow AI is a full-stack SaaS built with Next.js 14 App Router, TypeScript, and Tailwind CSS. It helps B2B teams go from raw idea → AI-generated draft → team review → one-click email approval → auto-published LinkedIn post — inside one tool.
+PostFlow AI is a full-stack SaaS built with Next.js 15 App Router, TypeScript, and Tailwind CSS. It helps B2B teams go from raw idea → AI-generated draft → team review → one-click email approval → auto-published LinkedIn post — inside one tool.
 
 ---
 
@@ -10,7 +10,7 @@ PostFlow AI is a full-stack SaaS built with Next.js 14 App Router, TypeScript, a
 
 | Layer | Technology |
 |-------|-----------|
-| Framework | Next.js 14 App Router + TypeScript |
+| Framework | Next.js 15 App Router + TypeScript |
 | Styling | Tailwind CSS |
 | Database | Supabase (PostgreSQL + Row Level Security) |
 | Auth | Clerk (email, Google, GitHub OAuth) |
@@ -215,4 +215,4 @@ Set all environment variables in the Vercel dashboard. Cron jobs in `vercel.json
 
 ---
 
-*PostFlow AI — PRD v2.0 — Next.js 14, Supabase, Clerk, OpenAI GPT-4o, RevenueCat*
+*PostFlow AI — PRD v2.0 — Next.js 15, Supabase, Clerk, OpenAI GPT-4o, RevenueCat*
