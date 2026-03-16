@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --linkedin-blue: #0a66c2;
+}
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased;
+  }
+}
+
+@layer utilities {
+  .linkedin-blue {
+    color: var(--linkedin-blue);
+  }
+  .bg-linkedin-blue {
+    background-color: var(--linkedin-blue);
+  }
+}
